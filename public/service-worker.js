@@ -48,8 +48,6 @@ self.addEventListener("activiate", event => {
                             console.log("Removing old cache data", cacheToDelete);
                             return caches.delete(cacheToDelete)
                         }
-
-                        // get info from PWA lesson
                     })
                 );
             })
