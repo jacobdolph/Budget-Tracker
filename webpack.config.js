@@ -10,7 +10,7 @@ const config = {
     mode: "development",
     plugins: [
         new WebpackPwaManifest({
-            filename: "manifest.json",
+            filename: "manifest.webmanifest",
             inject: false,
             fingerprints: false,
             name: "Budget App",

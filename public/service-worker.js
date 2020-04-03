@@ -9,16 +9,17 @@ const FILES_TO_CACHE = [
     '/dist/icon_512x512.png',
     '/dist/icon_72x72.png',
     '/dist/icon_96x96.png',
-    '/dist/manifest.json',
-    '/models/transaction.js',
+    '/manifest.webmanifest',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
     '/index.html',
     '/index.js',
+    '/db.js',
     '/styles.css'
 ];
 
-const STATIC_CACHE = "static-cache-v1";
+const STATIC_CACHE = "static-cache-v2";
+const DATA_STATIC_CACHE = "data-cache-v1"
 const RUNTIME_CACHE = "runtime-cache";
 
 self.addEventListener("install", event => {
@@ -31,20 +32,24 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("activiate", event => {
-    const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
+    const currentCaches = [STATIC_CACHE, DATA_STATIC_CACHE];
     event.waitUntil(
         caches
             .keys()
             .then(cacheNames => {
-
-                cacheNames.filter(
+                return cacheNames.filter(
                     cacheName => !currentCaches.includes(cacheName)
                 );
             })
             .then(cachesToDelete => {
                 return Promise.all(
                     cachesToDelete.map(cacheToDelete => {
-                        return caches.delete(cacheToDelete)
+                        if (cacheToDelete !== STATIC_CACHE && cacheToDelete !== DATA_STATIC_CACHE) {
+                            console.log("Removing old cache data", cacheToDelete);
+                            return caches.delete(cacheToDelete)
+                        }
+
+                        // get info from PWA lesson
                     })
                 );
             })
@@ -59,9 +64,9 @@ self.addEventListener("fetch", event => {
         event.respondWith(fetch(event.request));
         return;
     }
-    if (event.request.url.includes("/api/transaction")) {
+    if (event.request.url.includes("/api/transaction/bulk")) {
         event.respondWith(
-            caches.open(RUNTIME_CACHE).then(cache => {
+            caches.open(DATA_STATIC_CACHE).then(cache => {
                 return fetch(event.request)
                     .then(response => {
                         cache.put(event.request, response.clone());
