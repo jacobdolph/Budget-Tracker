@@ -1,9 +1,10 @@
 body {
+  background-image: radial-gradient(circle, rgb(255, 255, 255), rgb(143, 143, 143));
   font-size: 120%;
   font-family: Arial;
 }
 
-button, input {
+ input {
   font-size: 100%;
   font-family: Arial;
 }
@@ -27,6 +28,7 @@ tr:nth-child(even) {
 }
 
 .wrapper {
+  background-color: white;
   margin: 0 auto;
   max-width: 825px;
   text-align: center;
