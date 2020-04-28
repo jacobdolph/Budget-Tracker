@@ -29,7 +29,7 @@ tr:nth-child(even) {
 
 .wrapper {
   background-color: white;
-  margin: 0 auto;
+  margin: 2rem auto;
   max-width: 825px;
   text-align: center;
 }
@@ -49,5 +49,5 @@ tr:nth-child(even) {
   max-height: 300px;
   overflow: auto;
   width: 90%;
-  margin: 0 auto;
+  margin: 2rem auto;
 }
